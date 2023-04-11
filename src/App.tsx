@@ -144,11 +144,8 @@ export default function PEGJSEditor() {
         grammarBuild.set(true)
         const ast = peggy.generate(grammarCode.get(), { output: "ast" })
         setAST(ast);
-        //setResult(ast);
-        console.log(createDiagram(ast.rules[0], ast));
         grammarRules.set(ast.rules.map(e => e.name))
         grammarLit.set(ast.literals || [])
-        //console.log(generateRailroadDiagrams(ast));
 
         let diagrams = ast.rules.map(rule => createDiagram(rule, ast))
         diagrams = diagrams.map((d, i) => makeDiagram(d, ast, i))

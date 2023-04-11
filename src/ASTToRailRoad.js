@@ -45,7 +45,6 @@ export function createDiagram(node, ast) {
         case "rule_ref":
             return rr.NonTerminal(node.name);
         case 'literal':
-            console.log('literal', node.value)
             return rr.Terminal(escapeFn(node.value), {cls: "ast-literal-node"});
         case 'class':
             return rr.Terminal(stringifyClass(node, escapeFn), {cls: "ast-class-node"});
