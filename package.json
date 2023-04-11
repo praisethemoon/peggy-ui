@@ -20,7 +20,6 @@
     "@uiw/react-codemirror": "^4.19.15",
     "ace-builds": "^1.16.0",
     "brace": "^0.11.1",
-    "gh-pages": "^5.0.0",
     "install": "^0.13.0",
     "npm": "^9.6.4",
     "peggy": "^3.0.2",
@@ -59,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }
