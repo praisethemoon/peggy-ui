@@ -1,15 +1,26 @@
 Peggy UI
 ===
 
+
 ### About:
 This is a slightly better version of `https://peggyjs.org/online`.
 Well it is still not better right but it will be.
+
+### Build
+
+Please build with `yarn`.
 
 ### Why use this
 As you are building a parser, you will often want to match your grammar with the AST you have generated, this does exactly that.
 1. Write your grammar
 2. Write sample code
 3. Visual the tree you have generate as well as the output in the window instead of console.log. Ez.
+
+### Shoutouts
+
+- https://dundalek.com/grammkit/#package
+- http://github.com/tabatkins/railroad-diagrams
+
 
 ### Copyright
 

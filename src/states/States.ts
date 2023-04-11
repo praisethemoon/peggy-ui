@@ -44,3 +44,8 @@ const initialEditorOptions: EditorOptionsInterface = {
     theme: "github"
 }
 export const editorOptionsState = hookstate<EditorOptionsInterface>(initialEditorOptions)
+
+export const grammarRulesNames = hookstate<string[]>([])
+export const grammarLiterals = hookstate<string[]>([])
+export const grammarDiagrams = hookstate<string[]>([])
+export const grammarBuildState = hookstate<boolean>(false)
