@@ -16,3 +16,6 @@ code {
   width: 100%;
   height: 100%;
 }
+div.react-terminal-wrapper {
+  font-size: 14px;
+}
