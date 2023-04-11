@@ -61,50 +61,7 @@ export const UISettingsModal: React.FC<{ open: boolean, handleClose: () => void 
     };
 
     const editorThemes = [
-        'ambiance',
-        'chaos',
-        'chrome',
-        'cloud9_day',
-        'cloud9_night',
-        'cloud9_night_low_color',
-        'clouds',
-        'clouds_midnight',
-        'cobalt',
-        'crimson_editor',
-        'dawn',
-        'dracula',
-        'dreamweaver',
-        'eclipse',
-        'github',
-        'gob',
-        'gruvbox',
-        'gruvbox_dark_hard',
-        'gruvbox_light_hard',
-        'idle_fingers',
-        'iplastic',
-        'katzenmilch',
-        'kr_theme',
-        'kuroir',
-        'merbivore',
-        'merbivore_soft',
-        'mono_industrial',
-        'monokai',
-        'nord_dark',
-        'one_dark',
-        'pastel_on_dark',
-        'solarized_dark',
-        'solarized_light',
-        'sqlserver',
-        'terminal',
-        'textmate',
-        'tomorrow',
-        'tomorrow_night',
-        'tomorrow_night_blue',
-        'tomorrow_night_bright',
-        'tomorrow_night_eighties',
-        'twilight',
-        'vibrant_ink',
-        'xcode',
+        'vs-dark', 'light'
     ]
 
     return (
@@ -113,6 +70,7 @@ export const UISettingsModal: React.FC<{ open: boolean, handleClose: () => void 
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
                 hideBackdrop
+                transitionDuration={0}
                 open={open}
 
             >
@@ -140,11 +98,11 @@ export const UISettingsModal: React.FC<{ open: boolean, handleClose: () => void 
                             <Typography>Font Size</Typography>
                             <Slider
                                 aria-label="Font Size"
-                                defaultValue={uioptions.fontSize.get()}
+                                value={uioptions.fontSize.get()}
                                 valueLabelDisplay="auto"
                                 step={1}
                                 marks
-                                onChange={(e, v) => uioptions.fontSize.set(v as number)}
+                                onChange={(e, v) => uioptions.fontSize.set(v as number || 0)}
                                 min={9}
                                 max={30}
                             />
@@ -154,12 +112,12 @@ export const UISettingsModal: React.FC<{ open: boolean, handleClose: () => void 
                         <Box sx={{ width: "100%" }} mt={3}>
                             <Typography>Tab Size</Typography>
                             <Slider
-                                aria-label="Font Size"
-                                defaultValue={uioptions.tabSize.get()}
+                                aria-label="Tab Size"
+                                value={uioptions.tabSize.get()}
                                 valueLabelDisplay="auto"
                                 step={1}
                                 marks
-                                onChange={(e, v) => uioptions.tabSize.set(v as number)}
+                                onChange={(e, v) => uioptions.tabSize.set(v as number || 0)}
                                 min={1}
                                 max={12}
                             />

@@ -9,7 +9,7 @@ export interface EditorProps {
     mode?: any;
     onChange: (value: string) => void;
     value: string;
-    defaultValue?:string 
+    defaultValue?: string
 }
 
 export const CodeEditor: React.FC<EditorProps> = (props) => {
@@ -19,7 +19,7 @@ export const CodeEditor: React.FC<EditorProps> = (props) => {
 
     function handleEditorDidMount(editor: any, monaco: Monaco) {
         editorRef.current = editor;
-        monaco.languages.register({id: "peggy"})
+        monaco.languages.register({ id: "peggy" })
     }
 
     const handleChange = (data: string | undefined) => {
@@ -27,14 +27,19 @@ export const CodeEditor: React.FC<EditorProps> = (props) => {
             props.onChange(data)
     }
     return (
-        <Editor 
+        <Editor
             onMount={handleEditorDidMount}
             onChange={handleChange}
             height={"80vh"}
-            theme=''
+            theme={uioptions.theme.get()}
             defaultLanguage="peggy"
             defaultValue={props.defaultValue || ""}
-            
+            value={props.value}
+            options={{
+                fontSize: uioptions.fontSize.get(),
+                tabSize: uioptions.tabSize.get()
+            }}
+
         />
     )
 }
