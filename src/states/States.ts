@@ -1,9 +1,10 @@
 import { hookstate } from "@hookstate/core";
 import * as peggy from "peggy";
+import { peggyGrammarDemo, testGrammarDemo } from "../constants";
 
-export const grammarCodeState = hookstate("");
+export const grammarCodeState = hookstate(peggyGrammarDemo);
 //export const grammarPrefixCodeState = hookstate("");
-export const sampleCodeState = hookstate("")
+export const sampleCodeState = hookstate(testGrammarDemo)
 
 
 

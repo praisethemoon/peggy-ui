@@ -29,6 +29,8 @@ import CodeIcon from '@mui/icons-material/Code';
 import DatasetIcon from '@mui/icons-material/Dataset';
 import SubjectIcon from '@mui/icons-material/Subject';
 import DataObjectIcon from '@mui/icons-material/DataObject';
+import { peggyGrammarDemo } from './constants';
+import { testGrammarDemo } from './constants';
 
 const muitheme = createTheme({
     palette: {
@@ -271,6 +273,7 @@ export default function PEGJSEditor() {
                                         <CodeEditor
                                             value={grammarCode.get()}
                                             onChange={updateGrammarCode}
+                                            defaultValue={peggyGrammarDemo}
                                         />
                                     </Box>
                                 </TabPanel>
@@ -280,6 +283,7 @@ export default function PEGJSEditor() {
                                 <TabPanel value="3">
                                     <Box>
                                         <CodeEditor
+                                            defaultValue={testGrammarDemo}
                                             onChange={updateSampleCode}
                                             value={sampleCode.get()}
                                         />
