@@ -1,0 +1,8 @@
+.chakra-tabs__tab-panels {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+}
+

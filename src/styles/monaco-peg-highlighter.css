@@ -1,0 +1,10 @@
+/* Define styles for the rule-name token */
+.monaco-editor .rule-name {
+    background-color: #C678DD;
+    font-weight: bold;
+}
+
+/* Define styles for the alias-name token */
+.monaco-editor .alias-name {
+    color: #E5C07B;
+}

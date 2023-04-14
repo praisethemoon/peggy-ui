@@ -1,0 +1,1 @@
+export const defaultPeggyCalc = `2 * (3 + 4)`

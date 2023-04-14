@@ -1,4 +1,4 @@
-import rr from './railroad';
+import rr from '../vendor/railroad';
 
 function escapeFn(str){
     return str.replace("\n", "\\n", "\t", "\\t", "\r", "\\r")
@@ -54,7 +54,7 @@ export function createDiagram(node, ast) {
             return createDiagram(node.expression, ast)
         case 'simple_not':
             // needs testing
-            return rr.Optional(rr.Sequence(rr.End(), createDiagram(node.expression, ast)), rr.Skip() );
+            return rr.Optional(rr.Sequence(rr.End(), createDiagram(node.expression, ast)), 'skip' );
         case 'semantic_and':
             return rr.Terminal('[match:' + node.code + ']');
         case 'semantic_not':

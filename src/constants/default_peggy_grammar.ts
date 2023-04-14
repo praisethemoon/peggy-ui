@@ -1,5 +1,4 @@
-export  const peggyGrammarDemo = `
-// Simple Arithmetics Grammar
+export const defaultPeggySample = `// Simple Arithmetics Grammar
 // ==========================
 //
 // Accepts expressions like "2 * (3 + 4)" and computes their value.
@@ -29,6 +28,4 @@ Integer "integer"
 
 _ "whitespace"
   = [ \\t\\n\\r]*
-` 
-
-export const testGrammarDemo = `2 * (3 + 4)`
+`
