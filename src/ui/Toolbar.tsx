@@ -5,6 +5,7 @@ import { BsGear } from 'react-icons/bs'
 import { GoTerminal } from 'react-icons/go'
 import { IoMdOptions } from 'react-icons/io'
 import { FaDownload } from 'react-icons/fa'
+import * as peggy from 'peggy'
 import { compilePeggyGrammar, downloadParser, runSample } from "../functional/PeggyAPI";
 const Toolbar = () => {
     return (
@@ -16,7 +17,7 @@ const Toolbar = () => {
                 style={{position: "absolute", top: 12, left: 20}} 
                 color="whiteAlpha.900"
             >
-                peggy-ui
+                {`peggy v${peggy.VERSION}`}
             </Text>
             <ButtonGroup variant="solid" isAttached pr={3}>
                 <Button onClick={compilePeggyGrammar} aria-label="play" iconSpacing="3" leftIcon={<BsGear />} colorScheme="blackAlpha"> Build Peggy Grammar</Button>
