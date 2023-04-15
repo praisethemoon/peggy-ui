@@ -63,11 +63,12 @@ export const compilePeggyGrammar = () => {
 
     try {
         const raw_code = grammarPeggyCodeState.get()
-        const parser = peggy.generate(raw_code, { info: addGrammarLogInfo, warning: addGrammarLogWarn, error: addGrammarLogError, trace: false })
-        terminalLogsState.merge([{ message: "Grammar compiled 👌", type: "success" }])
-        parserState.set(parser)
-
+        
         const ast = peggy.generate(raw_code, { output: "ast" })
+        const parser: peggy.Parser = eval(ast.code?.toString() || "")
+        terminalLogsState.merge([{ message: "Grammar compiled 👌", type: "success" }])
+
+        parserState.set(parser)
 
         // updating grammar state objects
         grammarRuleDefinitionsState.set(ast.rules.map(e => ({ name: e.name, location: e.location, comment: ((e?.expression?.type === "named") ? (e.expression.name || "") : ("")) })))
@@ -81,7 +82,6 @@ export const compilePeggyGrammar = () => {
         ast.rules.forEach(rule => {
             traverseAst(rule, (node: any) => {
                 if (node.type === "action") {
-                    console.log(node)
                     actions.push({ code: node.code, location: node.location });
                 }
             });
