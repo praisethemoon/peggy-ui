@@ -151,18 +151,10 @@ export const registerPeggyForMonaco = (editor: any, monaco: Monaco) => {
 
             // get the word at the current position
             const wordAtPosition = model.getWordAtPosition(position);
-            console.log(wordAtPosition, grammarRuleDefinitionsState.get())
             // if the user has typed the beginning of a rule
             //if (wordAtPosition){
             const suggestions = grammarRuleDefinitionsState.get().filter(rule => rule.name.startsWith(wordAtPosition?.word || ''));
-            console.log(suggestions.map(suggestion => {
-                return {
-                    label: suggestion.name,
-                    detail: suggestion.comment,
-                    kind: monaco.languages.CompletionItemKind.Function,
-                    insertText: suggestion.name
-                };
-            }))
+
             return {
                 suggestions: suggestions.map(suggestion => {
                     return {

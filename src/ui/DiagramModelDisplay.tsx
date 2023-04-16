@@ -36,7 +36,6 @@ export const DiagramModelDisplay: React.FC<DiagramModelDisplayProps> = ({ size, 
     const [activeRuleIndex, setActiveIndex] = React.useState(defaultIndex)
 
     const handleOptionChange = (i: number) => {
-        console.log("changing to", i)
         setActiveIndex(i);
     };
 

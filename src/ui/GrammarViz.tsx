@@ -20,7 +20,6 @@ export const GrammarViz: React.FC = () => {
     const [size, setSize] = React.useState<ModalSize>("md")
 
     const openModal = (size: ModalSize, index: number) => {
-        console.log("opening", index)
         setSize(size)
         setSelectedIndex(index)
         setIsOpen(true)
