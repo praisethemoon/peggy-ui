@@ -11,6 +11,7 @@ import { Allotment } from "allotment";
 
 import "./styles/railroads.css"
 import "./styles/chakra-tab-override.css"
+import "./styles/json-override.css"
 import "./styles/monaco-peg-highlighter.css"
 import "allotment/dist/style.css"
 import { useResizeDetector } from "react-resize-detector";

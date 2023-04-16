@@ -1,0 +1,8 @@
+.padded-container {
+    margin: 0 20px;
+}
+
+.padded-expander {
+    margin-left: -13px;
+    margin-right: 5px;
+}

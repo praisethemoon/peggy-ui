@@ -10,6 +10,6 @@ import { useHookstate } from '@hookstate/core';
 export const SampleAST = () => {
     const testCode = useHookstate(testCodeResult)
     return (
-        <JsonView data={testCode.get() || {}} shouldInitiallyExpand={(level: any) => true} style={{ ...defaultStyles }} />
+        <JsonView data={testCode.get() || {}} shouldInitiallyExpand={(level: any) => true} style={{ ...defaultStyles, basicChildStyle: "padded-container", expander: "padded-expander" }} />
     );
 };
