@@ -9,23 +9,7 @@ export const registerPeggyForMonaco = (editor: any, monaco: Monaco) => {
      */
     monaco.languages.register({ id: 'peggyjs' });
 
-    /**
-     * Basics 
-     */
-    monaco.languages.setLanguageConfiguration('peggyjs', {
-        comments: {
-            lineComment: '//',
-            blockComment: ['/*', '*/']
-        },
-        brackets: [['(', ')'], ['[', ']'], ['{', '}']],
-        autoClosingPairs: [
-            { open: '(', close: ')' },
-            { open: '[', close: ']' },
-            { open: '{', close: '}' },
-            { open: "'", close: "'", notIn: ['string'] },
-            { open: '"', close: '"', notIn: ['string'] }
-        ]
-    });
+
 
     /**
      * Tokenizer
@@ -37,11 +21,14 @@ export const registerPeggyForMonaco = (editor: any, monaco: Monaco) => {
         comments: {
             lineComment: '//',
             blockComment: ['/*', '*/']
-          },
+        },
+
         // C# style strings
         escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
         tokenizer: {
             root: [
+                { include: 'common' },
+                { include: '@whitespace' },
                 {
                     // Match rule names 
                     regex: /([a-zA-Z_][a-zA-Z0-9_]*)?=[\s\n\r]*=/,
@@ -76,38 +63,76 @@ export const registerPeggyForMonaco = (editor: any, monaco: Monaco) => {
                     action: { token: 'js-start' },
                     next: 'js'
                 },
-                [/"([^"\\]|\\.)*$/, 'string.invalid'],  // non-teminated string
-                [/"/, { token: 'string.quote', bracket: '@open', next: '@string' }],
             ],
-            js: [
-                {
-                    regex: /}/,
-                    action: { token: 'js-end' },
-                    next: 'root'
-                },
-                {
-                    regex: /./,
-                    action: { token: 'javascript' }
-                }
-            ],
-            comment: [
-                [/[^\/*]+/, 'comment'],
-                [/\/\*/, 'comment', '@push'],    // nested comment
-                ["\\*/", 'comment', '@pop'],
-                [/[\/*]/, 'comment']
-            ],
+            common: [
+                // identifiers and keywords
 
-            string: [
-                [/[^\\"]+/, 'string'],
-                [/@escapes/, 'string.escape'],
-                [/\\./, 'string.escape.invalid'],
-                [/"/, { token: 'string.quote', bracket: '@close', next: '@pop' }]
+                [/[A-Z][\w\$]*/, 'type.identifier'],  // to show class names nicely
+                // [/[A-Z][\w\$]*/, 'identifier'],
+
+                // whitespace
+                { include: '@whitespace' },
+
+                // regular expression: ensure it is terminated before beginning (otherwise it is an opeator)
+
+                // delimiters and operators
+                [/[()\[\]]/, '@brackets'],
+                [/[<>](?!@symbols)/, '@brackets'],
+
+
+                // numbers
+
+
+                // delimiter: after number because of .\d floats
+                [/[;,.]/, 'delimiter'],
+
+                // strings
+                [/"([^"\\]|\\.)*$/, 'string.invalid'],  // non-teminated string
+                [/'([^'\\]|\\.)*$/, 'string.invalid'],  // non-teminated string
+                [/"/, 'string', '@string_double'],
+                [/'/, 'string', '@string_single'],
             ],
 
             whitespace: [
-                [/[ \t\r\n]+/, 'white'],
+                [/[ \t\r\n]+/, ''],
+                [/\/\*\*(?!\/)/, 'comment.doc', '@jsdoc'],
                 [/\/\*/, 'comment', '@comment'],
                 [/\/\/.*$/, 'comment'],
+            ],
+
+            comment: [
+                [/[^\/*]+/, 'comment'],
+                [/\*\//, 'comment', '@pop'],
+                [/[\/*]/, 'comment']
+            ],
+
+            jsdoc: [
+                [/[^\/*]+/, 'comment.doc'],
+                [/\*\//, 'comment.doc', '@pop'],
+                [/[\/*]/, 'comment.doc']
+            ],
+
+            // We match regular expression quite precisely
+
+
+            string_double: [
+                [/[^\\"]+/, 'string'],
+                [/@escapes/, 'string.escape'],
+                [/\\./, 'string.escape.invalid'],
+                [/"/, 'string', '@pop']
+            ],
+
+            string_single: [
+                [/[^\\']+/, 'string'],
+                [/@escapes/, 'string.escape'],
+                [/\\./, 'string.escape.invalid'],
+                [/'/, 'string', '@pop']
+            ],
+
+            bracketCounting: [
+                [/\{/, 'delimiter.bracket', '@bracketCounting'],
+                [/\}/, 'delimiter.bracket', '@pop'],
+                { include: 'common' }
             ],
         }
     });
@@ -118,8 +143,8 @@ export const registerPeggyForMonaco = (editor: any, monaco: Monaco) => {
         base: 'vs',
         inherit: true,
         rules: [
-            { token: 'comment', foreground: 'cccccc' },
-            { token: 'rule-name', foreground: '000000', fontStyle: 'bold' },
+            { token: 'comment', foreground: 'ff0000' },
+            { token: 'rule-name', foreground: '0000ff', fontStyle: 'bold' },
             { token: 'rule-comment', foreground: '990000', fontStyle: 'bold' },
             { token: 'alias-name', foreground: 'E5C07B' },
             { token: 'rule-name-multiline', foreground: "ff0000" }
