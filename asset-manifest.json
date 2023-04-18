@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/peggy-ui/static/css/main.24373b0b.css",
-    "main.js": "/peggy-ui/static/js/main.c6fac548.js",
+    "main.css": "/peggy-ui/static/css/main.eff2bc0c.css",
+    "main.js": "/peggy-ui/static/js/main.a5a70a1d.js",
     "static/js/787.793643fe.chunk.js": "/peggy-ui/static/js/787.793643fe.chunk.js",
     "index.html": "/peggy-ui/index.html",
-    "main.24373b0b.css.map": "/peggy-ui/static/css/main.24373b0b.css.map",
-    "main.c6fac548.js.map": "/peggy-ui/static/js/main.c6fac548.js.map",
+    "main.eff2bc0c.css.map": "/peggy-ui/static/css/main.eff2bc0c.css.map",
+    "main.a5a70a1d.js.map": "/peggy-ui/static/js/main.a5a70a1d.js.map",
     "787.793643fe.chunk.js.map": "/peggy-ui/static/js/787.793643fe.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.24373b0b.css",
-    "static/js/main.c6fac548.js"
+    "static/css/main.eff2bc0c.css",
+    "static/js/main.a5a70a1d.js"
   ]
 }
