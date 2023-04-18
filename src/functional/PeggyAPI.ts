@@ -1,10 +1,11 @@
 import * as peggy from 'peggy'
 
 // grammar code
-import { GrammarAction, grammarActionsState, grammarDiagramsStates, grammarPeggyCodeState, grammarRuleDefinitionsState, parserState } from '../states/GrammarStates'
+import { GrammarAction, grammarActionsState, grammarDiagramsStates, grammarLiterals, grammarPeggyCodeState, grammarRuleDefinitionsState, parserState } from '../states/GrammarStates'
 import { terminalLogsState } from '../states/TerminalLogsState'
 import { createDiagram, makeDiagram } from './ASTToRailroadDiagram'
-import { testCodeResult, testCodeState } from '../states/TestCodeStates';
+import { testCodeResult, testCodeState, testCodeTokenColorsState } from '../states/TestCodeStates';
+import { setupCustomLanguageMonaco } from './CustomLangMonacoSupport';
 
 /**
  * helper functions and peggyjs callbacks
@@ -73,6 +74,9 @@ export const compilePeggyGrammar = () => {
         // updating grammar state objects
         grammarRuleDefinitionsState.set(ast.rules.map(e => ({ name: e.name, location: e.location, comment: ((e?.expression?.type === "named") ? (e.expression.name || "") : ("")) })))
 
+        grammarLiterals.set(ast.literals || [])
+        generateTokensFromRules(ast)
+
         // creating diagrams
         let diagrams = ast.rules.map(rule => createDiagram(rule, ast))
         diagrams = diagrams.map((d, i) => makeDiagram(d, ast, i))
@@ -88,6 +92,9 @@ export const compilePeggyGrammar = () => {
         })
 
         grammarActionsState.set(actions);
+
+        // update custom language monaco:
+        setupCustomLanguageMonaco(null)
     }
 
     catch (e) {
@@ -142,4 +149,35 @@ export const downloadParser = () => {
     link.href = url;
     link.click();
     terminalLogsState.merge([{ message: "Grammar was clipped and shipped! Have fun!", type: "success" }])
+}
+
+const generateTokensFromRules = (ast: peggy.ast.Grammar) => {
+
+    /**
+     * We try to save old colors
+     * Assign new colors to new rules
+     */
+    const old_testCodeTokenColorsState = testCodeTokenColorsState.get()
+    const old_colormap: any = {}
+    const old_stylemap: any = {}
+
+    old_testCodeTokenColorsState.forEach((e, i) => {
+        old_colormap[e.name] = e.color
+        old_stylemap[e.name] = e.bold
+    })
+
+    old_testCodeTokenColorsState.forEach((e, i) => {
+        old_colormap[e.name] = e.color
+    })
+    
+    const tokensPerRules = ast.rules.map((e, i) => (
+        {
+            name: e.name,
+            tokens: e.expression.type != "choice"?([] as string[]):e.expression.alternatives.map((f, j) => f.type == "literal"?f.value:"").filter((f, j) => f != ""),
+            color: old_colormap[e.name] || Math.floor(Math.random()*16777215).toString(16),
+            bold: old_stylemap[e.name] || false,
+        }
+    )).filter((e, j) => e.tokens.length > 0)
+
+    testCodeTokenColorsState.set(tokensPerRules)
 }

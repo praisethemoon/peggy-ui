@@ -23,6 +23,7 @@ export const CodeEditor: React.FC<{
         <Editor
             height={h}
             width={w}
+            language={language}
             defaultLanguage={language}
             defaultValue={value}
             options={{

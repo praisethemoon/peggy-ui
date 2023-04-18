@@ -6,6 +6,11 @@ import { ImEnlarge2 } from 'react-icons/im'
 import { BsFullscreen } from 'react-icons/bs'
 import { grammarDiagramsStates, grammarRuleDefinitionsState } from "../states/GrammarStates";
 import { DiagramModelDisplay } from "./DiagramModelDisplay";
+import { testCodeTokenColorsState } from "../states/TestCodeStates";
+import { HexColorPicker } from "react-colorful";
+import { PopoverPicker } from "./PopoverColorPicker";
+import { TbBold, TbBoldOff } from 'react-icons/tb'
+import { setupCustomLanguageMonaco } from "../functional/CustomLangMonacoSupport";
 
 type ModalSize = "sm" | "md" | "lg" | "xl" | "full"
 
@@ -25,6 +30,8 @@ export const GrammarViz: React.FC = () => {
         setIsOpen(true)
     }
 
+    const testCodeTokenColors = useHookstate(testCodeTokenColorsState)
+
     return (
         <>
             <DiagramModelDisplay defaultIndex={selectedIndex} isOpen={isOpen} onClose={closeModal} size={size} />
@@ -37,13 +44,41 @@ export const GrammarViz: React.FC = () => {
                             </Box>
                             <AccordionIcon />
                         </AccordionButton>
-                        <AccordionPanel overflowY={"auto"}>
+                        <AccordionPanel overflowY={"auto"} borderColor={"blackAlpha.900"} borderWidth={3} borderStyle={"solid"}>
+
                             <Box display={"flex"} flexDirection={"row"}>
-                                <SVG src={item.get()} width={"100%"} />
-                                <Flex direction="column">
-                                    <IconButton icon={<ImEnlarge2 />} aria-label={"btn"+index} onClick={() => openModal('xl', index)} borderBottomRadius={0}/>
-                                    <IconButton icon={<BsFullscreen />} aria-label={"full"+index} onClick={() => openModal('full', index)} borderTopRadius={0}/>
+                                <Flex direction="column" alignItems={"center"}>
+                                    <IconButton icon={<ImEnlarge2 />} aria-label={"btn" + index} onClick={() => openModal('xl', index)} borderBottomRadius={0} />
+                                    <IconButton icon={<BsFullscreen />} aria-label={"full" + index} onClick={() => openModal('full', index)} borderTopRadius={0} />
+                                    {(testCodeTokenColors.findIndex((e) => e.name.get() == grammarRules[index].name.get()) != -1) && (
+                                        <Box pt={3}>
+                                            <PopoverPicker
+                                                color={testCodeTokenColors[testCodeTokenColors.findIndex((e) => e.name.get() == grammarRules[index].name.get())].color.get()}
+                                                onChange={(new_col) => {
+                                                    testCodeTokenColors[testCodeTokenColors.findIndex((e) => e.name.get() == grammarRules[index].name.get())].color.set(new_col)
+                                                    setupCustomLanguageMonaco(null)
+                                                }}
+                                            />
+                                            <Box pt={1}>
+                                                <IconButton aria-label="" size="sm" 
+                                                    icon={
+                                                        testCodeTokenColors[testCodeTokenColors.findIndex((e) => e.name.get() == grammarRules[index].name.get())].bold.get()?
+                                                        (<TbBold />):(<TbBoldOff />)
+                                                    }
+                                                    onClick={() => {
+                                                        testCodeTokenColors[testCodeTokenColors.findIndex((e) => e.name.get() == grammarRules[index].name.get())].bold.set(
+                                                            !testCodeTokenColors[testCodeTokenColors.findIndex((e) => e.name.get() == grammarRules[index].name.get())].bold.get()
+                                                        )
+                                                        setupCustomLanguageMonaco(null)
+                                                    }} 
+                                                />
+                                            </Box>
+                                        </Box>
+
+                                    )}
+
                                 </Flex>
+                                <SVG src={item.get()} width={"100%"} />
                             </Box>
                         </AccordionPanel>
                     </AccordionItem>

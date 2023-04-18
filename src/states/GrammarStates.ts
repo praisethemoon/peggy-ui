@@ -35,3 +35,4 @@ export const grammarActionsState = hookstate<GrammarAction[]>([])
 export const grammarDiagramsStates = hookstate<string[]>([])
 
 export const parserState = hookstate<peggy.Parser | undefined>(undefined);
+export const grammarLiterals = hookstate<string[]>([])

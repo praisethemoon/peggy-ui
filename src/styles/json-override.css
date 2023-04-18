@@ -1,5 +1,7 @@
 .padded-container {
     margin: 0 20px;
+    margin-right: 0px;
+    background-color: white;
 }
 
 .padded-expander {

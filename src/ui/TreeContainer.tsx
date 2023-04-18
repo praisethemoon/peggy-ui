@@ -1,7 +1,5 @@
-import { Box, useTab, useMultiStyleConfig, Button, Tabs, TabList, TabPanels, TabPanel, TabProps, Flex } from '@chakra-ui/react'
-import * as React from 'react'
-import { CodeEditor } from './PeggyCodeEditor';
-import { useResizeDetector } from 'react-resize-detector';
+import { Tabs, TabList, TabPanels, TabPanel } from '@chakra-ui/react';
+import * as React from 'react';
 import { CustomTab } from './CustomTab';
 import { SampleAST } from './SampleAST';
 import { GrammarViz } from './GrammarViz';
