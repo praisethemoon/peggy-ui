@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { HexAlphaColorPicker } from "react-colorful";
+import { HexColorPicker } from "react-colorful";
 
 import useClickOutside from "./useClickOutside";
 
@@ -20,7 +20,7 @@ export const PopoverPicker: React.FC<{ color:string, onChange: (newcolor: string
 
             {isOpen && (
                 <div className="popover" ref={popover}>
-                    <HexAlphaColorPicker color={color} onChange={onChange} />
+                    <HexColorPicker color={color} onChange={onChange} />
                 </div>
             )}
         </div>
