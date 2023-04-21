@@ -7,6 +7,10 @@ import { createDiagram, makeDiagram } from './ASTToRailroadDiagram'
 import { testCodeResult, testCodeState, testCodeTokenColorsState } from '../states/TestCodeStates';
 import { setupCustomLanguageMonaco } from './CustomLangMonacoSupport';
 
+function generateColors(): string {
+    return ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0")
+}
+
 /**
  * helper functions and peggyjs callbacks
  */
@@ -174,7 +178,7 @@ const generateTokensFromRules = (ast: peggy.ast.Grammar) => {
         {
             name: e.name,
             tokens: e.expression.type != "choice"?([] as string[]):e.expression.alternatives.map((f, j) => f.type == "literal"?f.value:"").filter((f, j) => f != ""),
-            color: old_colormap[e.name] || Math.floor(Math.random()*16777215).toString(16),
+            color: old_colormap[e.name] || generateColors(),
             bold: old_stylemap[e.name] || false,
         }
     )).filter((e, j) => e.tokens.length > 0)
